@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "CombineExt",
+        "repositoryURL": "https://github.com/CombineCommunity/CombineExt",
+        "state": {
+          "branch": null,
+          "revision": "fc3e405ea46ee748649bd8b71587b2a9c37e1422",
+          "version": "1.5.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
