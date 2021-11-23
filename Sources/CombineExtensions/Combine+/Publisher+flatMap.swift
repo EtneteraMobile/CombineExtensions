@@ -44,4 +44,22 @@ public extension Publisher {
         )
         .eraseToAnyPublisher()
     }
+
+    func flatMap<A: AnyObject, Output>(
+        weak object: A,
+        logger: @escaping (String) -> Void = { Swift.print($0) },
+        in file: String = #file,
+        on line: Int = #line,
+        _ transform: @escaping (A, Self.Output) -> AnyPublisher<Output, Self.Failure>
+    ) -> AnyPublisher<Output, Self.Failure> where Self.Failure == Never {
+        flatMap { [weak object] element -> AnyPublisher<Output, Self.Failure> in
+            guard let object = object else {
+                logger("Object is nil in file: \(file), on line: \(line)!")
+                return Empty(completeImmediately: false).eraseToAnyPublisher()
+            }
+
+            return transform(object, element)
+        }
+        .eraseToAnyPublisher()
+    }
 }
