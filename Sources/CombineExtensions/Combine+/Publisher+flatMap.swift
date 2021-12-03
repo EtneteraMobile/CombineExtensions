@@ -44,21 +44,47 @@ public extension Publisher {
         )
         .eraseToAnyPublisher()
     }
+}
 
+public extension Publisher where Self.Failure == Never {
     func flatMap<A: AnyObject, Output>(
         weak object: A,
         logger: @escaping (String) -> Void = { Swift.print($0) },
         in file: String = #file,
         on line: Int = #line,
+        completeOnNil: Bool = true,
         _ transform: @escaping (A, Self.Output) -> AnyPublisher<Output, Self.Failure>
-    ) -> AnyPublisher<Output, Self.Failure> where Self.Failure == Never {
+    ) -> AnyPublisher<Output, Self.Failure> {
         flatMap { [weak object] element -> AnyPublisher<Output, Self.Failure> in
             guard let object = object else {
-                logger("Object is nil in file: \(file), on line: \(line)!")
-                return Empty(completeImmediately: false).eraseToAnyPublisher()
+                logger("Object is nil in file: \(file), on line: \(line)! Function: \(#function)")
+                return Empty(completeImmediately: completeOnNil).eraseToAnyPublisher()
             }
 
             return transform(object, element)
+        }
+        .eraseToAnyPublisher()
+    }
+
+    func flatMap<A: AnyObject, B: AnyObject, Output>(
+        weak objectA: A,
+        weak objectB: B,
+        logger: @escaping (String) -> Void = { Swift.print($0) },
+        in file: String = #file,
+        on line: Int = #line,
+        completeOnNil: Bool = true,
+        _ transform: @escaping (A, B, Self.Output) -> AnyPublisher<Output, Self.Failure>
+    ) -> AnyPublisher<Output, Self.Failure> {
+        flatMap { [weak objectA, weak objectB] element -> AnyPublisher<Output, Self.Failure> in
+            guard
+                let objectA = objectA,
+                let objectB = objectB
+            else {
+                logger("Object is nil in file: \(file), on line: \(line)! Function: \(#function)")
+                return Empty(completeImmediately: completeOnNil).eraseToAnyPublisher()
+            }
+
+            return transform(objectA, objectB, element)
         }
         .eraseToAnyPublisher()
     }
