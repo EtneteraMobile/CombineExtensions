@@ -22,7 +22,10 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "CombineExtensions"
+            name: "CombineExtensions",
+            dependencies: [
+                "CombineExt"
+            ]
         ),
         .testTarget(
             name: "CombineExtensionsTests",
