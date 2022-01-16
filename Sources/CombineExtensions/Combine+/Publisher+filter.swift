@@ -5,8 +5,10 @@
 //  Created by Tuan Tu Do on 04.10.2021.
 //
 
+#if canImport(Combine)
 import Combine
 
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Publisher {
     func filter<A: AnyObject>(
         weak object: A,
@@ -25,3 +27,4 @@ public extension Publisher {
         }
     }
 }
+#endif

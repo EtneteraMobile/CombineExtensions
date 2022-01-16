@@ -5,8 +5,10 @@
 //  Created by Tuan Tu Do on 22.09.2021.
 //
 
+#if canImport(Combine)
 import Combine
 
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Publisher {
     func flatMap<A: AnyObject, P: Publisher>(
         weak object: A,
@@ -46,6 +48,7 @@ public extension Publisher {
     }
 }
 
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension Publisher where Self.Failure == Never {
     func flatMap<A: AnyObject, Output>(
         weak object: A,
@@ -89,3 +92,4 @@ public extension Publisher where Self.Failure == Never {
         .eraseToAnyPublisher()
     }
 }
+#endif

@@ -1,5 +1,5 @@
 //
-//  Publisher+assign.swift
+//  Publisher+assignWeakly.swift
 //  CombineExtensions
 //
 //  Created by Tuan Tu Do on 22.09.2021.
