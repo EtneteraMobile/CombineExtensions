@@ -27,9 +27,5 @@ let package = Package(
                 "CombineExt"
             ]
         ),
-        .testTarget(
-            name: "CombineExtensionsTests",
-            dependencies: ["CombineExtensions"]
-        )
     ]
 )
