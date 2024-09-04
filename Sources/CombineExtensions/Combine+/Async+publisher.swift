@@ -23,7 +23,7 @@ public extension AnyPublisher {
         }
         .eraseToAnyPublisher()
     }
-    
+
     static func publisher<T>(
         _ transform: @escaping () async -> T
     ) -> AnyPublisher<T, Never> {
